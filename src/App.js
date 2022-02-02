@@ -4,6 +4,7 @@ function App() {
 
 	const [calc, setCalc] = useState("");
 	const [result, setResult] = useState("");
+	const [history, setHistory] = useState([]);
 
 	const operators = ['/','*','+','-','.'];
 
@@ -56,11 +57,18 @@ function App() {
 	}
 
 	const calculate = () => {
-		setCalc(eval(calc).toString());
+		let val = eval(calc).toString();
+        setHistory([...history, calc + '=' + val]);
+		setCalc(val);
 	}
 
 	return (
 		<div className="App">
+			<div className="history">
+				{history.map(h => {
+					 return(<p>{h}</p>);
+				})}
+			</div>
 			<div className="calculator">
 				<div className="display">
 					{result ? <span>({result})   </span> : ''}
@@ -84,7 +92,8 @@ function App() {
 
 					<button onClick={calculate}>=</button>
 				</div>
-			</div>
+
+            </div>
 		</div>
 	);
 }
